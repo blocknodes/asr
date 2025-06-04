@@ -3,7 +3,9 @@ import sys
 with open(sys.argv[1], 'r') as f:
     data = f.read()
 # replace newlines with spaces
-data = data.replace('\'', '\"')
+data = data.split("[{\'")[-1]
+data ="[{\'" + data
+data=data.replace('\'', '\"')
 # print result
 print(data)
 
@@ -13,5 +15,5 @@ json_data = json.loads(data)
 # iterate over items and write to file
 with open(sys.argv[2], 'w') as f:
     for item in json_data:
-        f.write(f'{item["key"]}    {item["text"]}\n')
+        f.write(f'{item["key"]}    {item["text"].split("|>")[-1]}\n')
 
